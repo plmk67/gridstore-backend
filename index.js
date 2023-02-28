@@ -6,9 +6,11 @@ const mongoose = require("mongoose");
 const app = express();
 
 const productRoutes = require("./routes/product-routes");
+const orderRoutes = require("./routes/order-routes");
 
 //set up for Heroku
 app.set("trust proxy", 1);
+app.use(bodyParser.json());
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -30,6 +32,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/products", productRoutes);
+app.use("/api/order", orderRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
